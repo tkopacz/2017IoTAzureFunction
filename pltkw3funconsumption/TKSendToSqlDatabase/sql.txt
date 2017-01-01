@@ -1,0 +1,114 @@
+USE [tkDemoLoadToSQLDB]
+GO
+/****** Object:  Table [IoT].[tkIoTAzureFunction]    Script Date: 12/31/2016 10:23:11 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [IoT].[tkIoTAzureFunction](
+	[Device] [nvarchar](50) NOT NULL,
+	[Data] [nvarchar](512) NOT NULL,
+	[dt] [datetime] NOT NULL,
+	[track-id] [nvarchar](50) NOT NULL,
+	[track-cnt] [int] NOT NULL,
+	[query-module] [nvarchar](50) NULL,
+	[query-function] [nvarchar](50) NULL,
+	[query-val] [int] NULL
+)
+
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [ix-Device]    Script Date: 12/31/2016 10:23:12 PM ******/
+CREATE NONCLUSTERED INDEX [ix-Device] ON [IoT].[tkIoTAzureFunction]
+(
+	[Device] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+/****** Object:  Index [ix-dt]    Script Date: 12/31/2016 10:23:12 PM ******/
+CREATE NONCLUSTERED INDEX [ix-dt] ON [IoT].[tkIoTAzureFunction]
+(
+	[dt] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [ix-query-function]    Script Date: 12/31/2016 10:23:12 PM ******/
+CREATE NONCLUSTERED INDEX [ix-query-function] ON [IoT].[tkIoTAzureFunction]
+(
+	[query-function] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [ix-query-module]    Script Date: 12/31/2016 10:23:12 PM ******/
+CREATE NONCLUSTERED INDEX [ix-query-module] ON [IoT].[tkIoTAzureFunction]
+(
+	[query-module] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+/****** Object:  Index [ix-query-val]    Script Date: 12/31/2016 10:23:12 PM ******/
+CREATE NONCLUSTERED INDEX [ix-query-val] ON [IoT].[tkIoTAzureFunction]
+(
+	[query-val] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+/****** Object:  Index [ix-track-cnt]    Script Date: 12/31/2016 10:23:12 PM ******/
+CREATE NONCLUSTERED INDEX [ix-track-cnt] ON [IoT].[tkIoTAzureFunction]
+(
+	[track-cnt] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [ix-track-id]    Script Date: 12/31/2016 10:23:12 PM ******/
+CREATE NONCLUSTERED INDEX [ix-track-id] ON [IoT].[tkIoTAzureFunction]
+(
+	[track-id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+ALTER TABLE [IoT].[tkIoTAzureFunction] ADD  CONSTRAINT [DF_tkIoTAzureFunction_dt]  DEFAULT (getdate()) FOR [dt]
+GO
+/****** Object:  StoredProcedure [IoT].[tkInserttkIoTAzureFunction]    Script Date: 12/31/2016 10:23:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+create procedure [IoT].[tkInserttkIoTAzureFunction]
+           @Device nvarchar(50),
+           @Data nvarchar(512),
+           @dt datetime,
+           @track_id nvarchar(50),
+           @track_cnt int,
+           @query_module nvarchar(50),
+           @query_function nvarchar(50),
+           @query_val int
+as
+INSERT INTO [IoT].[tkIoTAzureFunction]
+           ([Device]
+           ,[Data]
+           ,[dt]
+           ,[track-id]
+           ,[track-cnt]
+           ,[query-module]
+           ,[query-function]
+           ,[query-val])
+     VALUES
+           (
+           @Device,
+           @Data,
+           @dt,
+           @track_id,
+           @track_cnt,
+           @query_module,
+           @query_function,
+           @query_val 		   
+		   )
+
+GO
